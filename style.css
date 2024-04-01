@@ -1,6 +1,6 @@
 body {
   height: 100vh;
-  width: 100vw;
+  width: 100vh;
   background-color: black;
   margin: 0rem;
   overflow: hidden;
@@ -10,7 +10,13 @@ body {
   width: 40vmin;
   height: 56vmin;
   object-fit: cover;
-  object-position: center;
+  object-position: 100% 50%;
+  cursor: pointer;
+}
+
+#image-track > .image img:hover {
+  cursor: pointer;
+  transform: scale(1.2);
 }
 
 #image-track {
@@ -20,4 +26,9 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(0%, -50%);
+}
+
+.span {
+  display: inline-block;
+  width: 100px;
 }
