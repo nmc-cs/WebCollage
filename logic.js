@@ -1,5 +1,6 @@
 const track = document.getElementById("image-track");
 let touchStartX = 0;
+let scrollStart = 0;
 
 window.addEventListener("mousedown", (e) => {
   track.dataset.mouseDownAt = e.clientX;
@@ -22,14 +23,14 @@ window.addEventListener("mousemove", (e) => {
 
   track.animate(
     {
-      transform: "translate(" + nextPercentage + "%,-50%)",
+      transform: `translate(${nextPercentage}%, -50%)`, // Corrected interpolation
     },
     { duration: 1200, fill: "forwards" }
   );
 
   for (const image of track.getElementsByClassName("image")) {
     image.animate(
-      { objectPosition: nextPercentage + 100 + "% 50%" },
+      { objectPosition: `${100 + nextPercentage}% center` }, // Corrected interpolation
       { duration: 1200, fill: "forwards" }
     );
   }
@@ -66,14 +67,13 @@ window.addEventListener("touchmove", (e) => {
 
     track.animate(
       {
-        transform: "translate(" + nextPercentage + "%,-50%)",
-      },
-      { duration: 1200, fill: "forwards" }
+        transform: `translate(${nextPercentage}%, -50%)`, // Corrected interpolation
+      }, { duration: 1200, fill: "forwards" }
     );
 
     for (const image of track.getElementsByClassName("image")) {
       image.animate(
-        { objectPosition: nextPercentage + 100 + "% 50%" },
+        { objectPosition: `${100 + nextPercentage}% center` }, // Corrected interpolation
         { duration: 1200, fill: "forwards" }
       );
     }
@@ -86,4 +86,21 @@ window.addEventListener("touchend", () => {
   }
 
   track.dataset.prevPercentage = track.dataset.percentage;
+});
+
+window.addEventListener("scroll", () => {
+  const scrollPosition = window.scrollY;
+
+  // Calculate the delta of scroll position
+  const scrollDelta = scrollPosition - scrollStart;
+
+  // Adjust the position of the images based on the scroll delta
+  const parallaxValue = scrollDelta * 0.5; // Adjust the parallax effect strength as needed
+
+  for (const image of track.getElementsByClassName("image")) {
+    image.style.transform = `translateX(${parallaxValue}px)`;
+  }
+
+  // Update the scroll start position
+  scrollStart = scrollPosition;
 });
